@@ -46,26 +46,26 @@ class _FirstScreenState extends State<FirstScreen> {
       ),
         appBar: const PreferredSize(
             preferredSize: Size.fromHeight(50), child: ApplicationToolBar()),
-        body: CustomScrollView(
+        body:CustomScrollView(
           slivers: [
             SliverAppBar(
               expandedHeight: 210.0,
-
-              actions: [
-                FirstContainer()
-              ],
+              pinned: true,
+              flexibleSpace: FlexibleSpaceBar(
+                background: Column(
+                  children: [
+                    Divider(height: 0.1,color: Colors.white,),
+                    FirstContainer(),
+                  ],
+                ),
+              ),
             ),
-            SliverList(delegate: SliverChildBuilderDelegate((context, index) => SecondContainer())),
-            // SliverGrid(
-            //     delegate: SliverChildBuilderDelegate((context, index) => SecondContainer()),
-            //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            //       mainAxisExtent: 0.0,
-            //       crossAxisCount: 3,
-            //
-            //     )
-            // )
+            SliverToBoxAdapter(
+              child: SecondContainer(),
+            )
           ],
-        )
+        ),
+
         // Column(
         //   children: const [
         //     Divider(

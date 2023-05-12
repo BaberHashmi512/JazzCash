@@ -23,7 +23,7 @@ class _FirstContainerState extends State<FirstContainer> {
         color: Colors.black87,
         borderRadius: BorderRadius.only(bottomLeft: Radius.circular(25)),
       ),
-      // height: 210,
+      height: 210,
       child: Column(
         children: [
           Row(
