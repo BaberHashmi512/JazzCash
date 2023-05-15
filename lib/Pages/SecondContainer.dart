@@ -44,25 +44,29 @@ class _SecondContainerState extends State<SecondContainer> {
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: buildIconButton("assets/images/paper-plane.svg", "Money Transfer", (){
+                  child: buildIconButton(
+                      "assets/images/paper-plane.svg", "Money Transfer", () {
                     debugPrint("shit is about to get real");
                   }),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: buildIconButton("assets/images/invoice.svg", "Utility Bills", (){
+                  child: buildIconButton(
+                      "assets/images/invoice.svg", "Utility Bills", () {
                     debugPrint("shit is about to get real");
                   }),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: buildIconButton("assets/images/mobile.svg", "Mobile load & Package", (){
+                  child: buildIconButton(
+                      "assets/images/mobile.svg", "Mobile load & Package", () {
                     debugPrint("shit is about to get real");
                   }),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: buildIconButton("assets/images/magnet.svg", "Banking & Finance", (){
+                  child: buildIconButton(
+                      "assets/images/magnet.svg", "Banking & Finance", () {
                     debugPrint("shit is about to get real");
                   }),
                 ),
@@ -89,25 +93,28 @@ class _SecondContainerState extends State<SecondContainer> {
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: buildIconButton("assets/images/person.svg", "Debit Card", (){
+                  child: buildIconButton(
+                      "assets/images/person.svg", "Debit Card", () {
                     debugPrint("shit is about to get real");
                   }),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: buildIconButton("assets/images/person.svg", "Mobile Package", (){
+                  child: buildIconButton(
+                      "assets/images/person.svg", "Mobile Package", () {
                     debugPrint("shit is about to get real");
                   }),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: buildIconButton("assets/images/bank.svg", "Raast", (){
+                  child: buildIconButton("assets/images/bank.svg", "Raast", () {
                     debugPrint("shit is about to get real");
                   }),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: buildIconButton("assets/images/tv.svg", "Savings Plan", (){
+                  child: buildIconButton("assets/images/tv.svg", "Savings Plan",
+                      () {
                     debugPrint("shit is about to get real");
                   }),
                 ),
@@ -165,9 +172,9 @@ class _SecondContainerState extends State<SecondContainer> {
               height: 10,
             ),
             Column(
-              children:  [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
+              children: [
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: Text(
                     "Latest Updates",
                     style: TextStyle(fontWeight: FontWeight.bold),
@@ -190,8 +197,6 @@ class _SecondContainerState extends State<SecondContainer> {
     );
   }
 }
-
-
 
 Widget buildIconButton(String svgAssetPath, String caption, onPressed) {
   return Column(

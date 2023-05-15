@@ -28,14 +28,23 @@ class _FirstContainerState extends State<FirstContainer> {
         children: [
           Row(
             children: [
-              const Padding(
-                padding: EdgeInsets.all(10.0),
-                child: CircleAvatar(
-                  backgroundImage: AssetImage(
-                    "assets/images/Baber.photho.jpg",
+               Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5)
                   ),
-                  backgroundColor: Colors.yellow,
-                  radius: 25,
+                  child: const CircleAvatar(
+                    backgroundColor: Colors.yellow,
+                    radius: 25,
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage(
+                        "assets/images/Baber.photho.jpg",
+                      ),
+                      backgroundColor: Colors.yellow,
+                      radius: 23,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(
@@ -61,7 +70,12 @@ class _FirstContainerState extends State<FirstContainer> {
                 ],
               ),
               const Padding(padding: EdgeInsets.only(left: 150)),
-              const Icon(Icons.qr_code_scanner_rounded, color: Colors.white),
+              Container(
+                decoration: BoxDecoration(
+                    color: Colors.black38,
+                    borderRadius: BorderRadius.circular(10)
+                ),
+                  child: const Icon(Icons.qr_code_scanner_rounded, color: Colors.white)),
             ],
           ),
           const SizedBox(
