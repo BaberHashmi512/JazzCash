@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'Scan_QR.dart';
-import 'SearchScreen.dart';
-
 class Invite extends StatefulWidget {
   const Invite({Key? key}) : super(key: key);
 
@@ -15,50 +12,6 @@ class _InviteState extends State<Invite> {
   Widget build(BuildContext context) {
     return  Scaffold(
       backgroundColor: Colors.black,
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: 0,
-        elevation: 0,
-        selectedItemColor: Colors.black,
-        items: [
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Home",
-          ),
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.location_on_rounded),
-            label: "Locator",
-          ),
-          BottomNavigationBarItem(
-            icon: GestureDetector(
-                onTap: (){
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (ctx)=> const QRCodeScreen()));
-                },
-                child: const Icon(Icons.qr_code)),
-            label: "Scan QR",
-          ),
-          BottomNavigationBarItem(
-            icon: GestureDetector(
-                onTap: (){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const SearchScreen()),
-                  );
-                },
-                child: const Icon(Icons.search)),
-            label: "Search",
-          ),
-          BottomNavigationBarItem(
-            icon: GestureDetector(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (ctx) => const Invite()));
-                },
-                child: const Icon(Icons.person_add_alt)),
-            label: "Invite",
-          ),
-        ],
-      ),
       appBar: AppBar(
         backgroundColor: Colors.black,
         elevation: 0,
@@ -99,7 +52,7 @@ class _InviteState extends State<Invite> {
               const Text("Total Earnings", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 24),),
               const Padding(padding: EdgeInsets.symmetric(vertical: 20)),
               const Text("Rs. 0", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 24),),
-              const Padding(padding: EdgeInsets.symmetric(vertical: 20)),
+              const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
               Row(
                 children: [
                   Padding(
@@ -128,7 +81,7 @@ class _InviteState extends State<Invite> {
               )
             ],
           ),
-          const Spacer(),
+          Spacer(),
           Container(
             decoration: const BoxDecoration(
               color: Colors.white,

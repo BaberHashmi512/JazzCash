@@ -1,56 +1,67 @@
 import 'package:flutter/material.dart';
+import 'FirstScreen.dart';
+import 'Invite.dart';
+import 'Locator.dart';
+import 'Scan_QR.dart';
+import 'SearchScreen.dart';
 
-class MyNavigationBar extends StatefulWidget {
-  MyNavigationBar ({required Key key}) : super(key: key);
+class BottomNavigation extends StatefulWidget {
+  const BottomNavigation({Key? key}) : super(key: key);
 
   @override
-  _MyNavigationBarState createState() => _MyNavigationBarState();
+  State<BottomNavigation> createState() => _BottomNavigationState();
 }
 
-class _MyNavigationBarState extends State<MyNavigationBar > {
-  int _selectedIndex = 0;
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text('Home Page', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
-    Text('Search Page', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
-    Text('Profile Page', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
-  ];
+class _BottomNavigationState extends State<BottomNavigation> {
+  int currentIndex = 0;
 
-  void _onItemTapped(int index) {
+  void onTap(int index) {
     setState(() {
-      _selectedIndex = index;
+      currentIndex = index;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+      body: IndexedStack(
+        index: currentIndex,
+        children: const [
+          FirstScreen(),
+          Locator(),
+          QRCodeScreen(),
+          SearchScreen(),
+          Invite(),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-                backgroundColor: Colors.green
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.search),
-                label:'Search',
-                backgroundColor: Colors.yellow
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Profile',
-              backgroundColor: Colors.blue,
-            ),
-          ],
-          type: BottomNavigationBarType.shifting,
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.black,
-          iconSize: 40,
-          onTap: _onItemTapped,
-          elevation: 5
+        onTap: onTap,
+        currentIndex: currentIndex,
+        type: BottomNavigationBarType.fixed,
+        elevation: 0,
+        selectedItemColor: Colors.black,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.location_on_rounded),
+            label: "Locator",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.qr_code),
+            label: "Scan QR",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: "Search",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_add_alt),
+            label: "Invite",
+          ),
+        ],
       ),
     );
   }

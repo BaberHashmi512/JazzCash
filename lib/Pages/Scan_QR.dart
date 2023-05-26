@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class QRCodeScreen extends StatefulWidget {
-  const QRCodeScreen({super.key});
+  const QRCodeScreen({Key? key}) : super(key: key);
 
   @override
   _QRCodeScreenState createState() => _QRCodeScreenState();
@@ -11,41 +11,61 @@ class QRCodeScreen extends StatefulWidget {
 class _QRCodeScreenState extends State<QRCodeScreen> {
   QRViewController? _controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  String qrCodeMessage = '';
+  bool _isFlashOn = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text('QR Code Scanner'),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            flex: 5,
-            child: QRView(
-              key: qrKey,
-              onQRViewCreated: _onQRViewCreated,
+        backgroundColor: Colors.black,
+        automaticallyImplyLeading: false,
+        title: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: const [
+            Text("Use Camera to Scan JazzCash Business"),
+            Text("QR Code and Pay"),
+          ],
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              if (_controller != null) {
+                setState(() {
+                  _isFlashOn = !_isFlashOn;
+                  _controller!.toggleFlash();
+                });
+              }
+            },
+            icon: Icon(
+              _isFlashOn ? Icons.flash_on : Icons.flash_off,
             ),
           ),
-          Expanded(
-            flex: 1,
-            child: Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  if (_controller != null) {
-                    _controller!.toggleFlash();
-                  }
-                },
-                child: Text('Enable Camera'),
+        ],
+      ),
+      body: Container(
+
+        color: Colors.black,
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.white,
+                  width: 1.0,
+                ),
+              ),
+              child: AspectRatio(
+                aspectRatio: 1.0,
+                child: QRView(
+                  key: qrKey,
+                  onQRViewCreated: _onQRViewCreated,
+                ),
               ),
             ),
           ),
-          Text(
-            'Scanned QR Code: $qrCodeMessage',
-            style: TextStyle(fontSize: 18),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -53,11 +73,7 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
   void _onQRViewCreated(QRViewController controller) {
     setState(() {
       _controller = controller;
-      controller.scannedDataStream.listen((scanData) {
-        setState(() {
-          qrCodeMessage = scanData.code!;
-        });
-      });
+      controller.scannedDataStream.listen((scanData) {});
     });
   }
 

@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:jazzcash/Pages/FirstScreen.dart';
-
-import 'Pages/Locator.dart';
+import 'Pages/BottomNavigation.dart';
 
 void main() {
   runApp(
     MaterialApp(
       theme: ThemeData(),
       debugShowCheckedModeBanner: false,
-      home: FirstScreen(),
+      home: const BottomNavigation(),
     ),
   );
 }

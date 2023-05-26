@@ -1,8 +1,4 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-
-import 'Scan_QR.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -15,56 +11,17 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: 0,
-        elevation: 0,
-        selectedItemColor: Colors.black,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Home",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.location_on_rounded),
-            label: "Locator",
-          ),
-          BottomNavigationBarItem(
-            icon: GestureDetector(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (ctx) => QRCodeScreen()));
-                },
-                child: Icon(Icons.qr_code)),
-            label: "Scan QR",
-          ),
-          BottomNavigationBarItem(
-            icon: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SearchScreen()),
-                  );
-                },
-                child: Icon(Icons.search)),
-            label: "Search",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_add_alt),
-            label: "Invite",
-          ),
-        ],
-      ),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
         backgroundColor: Colors.white,
-        title: Text(
+        title: const Text(
           "Search",
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.black,
-            fontSize: 20,
+            fontSize: 25,
           ),
         ),
       ),
@@ -83,49 +40,55 @@ class _SearchScreenState extends State<SearchScreen> {
                       color: Colors.white.withOpacity(0.5),
                       spreadRadius: 2,
                       blurRadius: 5,
-                      offset: Offset(0, 3), // Adjust the offset values as needed
+                      offset: const Offset(0, 3), // Adjust the offset values as needed
                     ),
                   ],
                   borderRadius: BorderRadius.circular(50),
                 ),
                 child: TextField(
                   decoration: InputDecoration(
+                    border: InputBorder.none,
                     enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      borderSide: BorderSide(width: 2
-                          , color: Colors.grey)
+                      borderRadius: BorderRadius.circular(50),
+                      borderSide: const BorderSide(
+                        color: Colors.grey, // Specify the border color here
+                      ),
                     ),
-                    suffixIcon: Icon(Icons.search),
-                    border: OutlineInputBorder(),
-                    hintText: '  Search ',
+                    contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                    prefixIcon: Icon(Icons.search),
+                    hintText: 'Search',
+                    hintStyle: TextStyle(color: Colors.grey),
+                    filled: true,
+                    fillColor: Colors.white.withOpacity(0.5), // Specify the background color here
                   ),
                 ),
+
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 40,
           ),
-          Divider(
+          const Divider(
             height: 0.1,
             color: Colors.grey,
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
-          Text(
+          const Text(
             "      Trending Searches",
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.grey,
                 fontSize: 18),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Row(
             children: [
-              SizedBox(
+              const SizedBox(
                 width: 8,
               ),
               ElevatedButton(
@@ -135,8 +98,8 @@ class _SearchScreenState extends State<SearchScreen> {
                     backgroundColor: Colors.grey,
                   ),
                   onPressed: () {},
-                  child: Text("Bank")),
-              SizedBox(
+                  child: const Text("Bank")),
+              const SizedBox(
                 width: 5,
               ),
               ElevatedButton(
@@ -146,8 +109,8 @@ class _SearchScreenState extends State<SearchScreen> {
                     backgroundColor: Colors.grey,
                   ),
                   onPressed: () {},
-                  child: Text("Send Money to JazzCash")),
-              SizedBox(
+                  child: const Text("Send Money to JazzCash")),
+              const SizedBox(
                 width: 5,
               ),
               ElevatedButton(
@@ -157,12 +120,12 @@ class _SearchScreenState extends State<SearchScreen> {
                     backgroundColor: Colors.grey,
                   ),
                   onPressed: () {},
-                  child: Text("Mobile"))
+                  child: const Text("Mobile"))
             ],
           ),
           Row(
             children: [
-              SizedBox(
+              const SizedBox(
                 width: 8,
               ),
               ElevatedButton(
@@ -172,8 +135,8 @@ class _SearchScreenState extends State<SearchScreen> {
                     backgroundColor: Colors.grey,
                   ),
                   onPressed: () {},
-                  child: Text("TopUp")),
-              SizedBox(
+                  child: const Text("TopUp")),
+              const SizedBox(
                 width: 5,
               ),
               ElevatedButton(
@@ -183,8 +146,8 @@ class _SearchScreenState extends State<SearchScreen> {
                     backgroundColor: Colors.grey,
                   ),
                   onPressed: () {},
-                  child: Text("Payoneer")),
-              SizedBox(
+                  child: const Text("Payoneer")),
+              const SizedBox(
                 width: 5,
               ),
               ElevatedButton(
@@ -194,7 +157,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     backgroundColor: Colors.grey,
                   ),
                   onPressed: () {},
-                  child: Text("Debit Card"))
+                  child: const Text("Debit Card"))
             ],
           ),
         ],
@@ -202,3 +165,4 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 }
+

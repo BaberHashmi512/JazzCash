@@ -17,6 +17,16 @@ class _LocatorState extends State<Locator> {
       child: Scaffold(
         body: Stack(
           children: [
+            Positioned(
+              bottom: 16.0,
+              right: 16.0,
+              child: IconButton(
+                icon: const Icon(Icons.location_on_rounded),
+                onPressed: () {
+                  // Handle location button pressed
+                },
+              ),
+            ),
             GoogleMap(
               onMapCreated: (GoogleMapController controller) {
                 googleMapController = controller;
@@ -39,7 +49,7 @@ class _LocatorState extends State<Locator> {
                     print('Selected location: $value');
                   },
                   onCurrentLocationPressed: () {
-
+                    // Handle current location button pressed
                   },
                 ),
               ),
@@ -84,7 +94,7 @@ class _SearchBarState extends State<SearchBar> {
   Widget build(BuildContext context) {
     return Card(
       elevation: 4.0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Row(
