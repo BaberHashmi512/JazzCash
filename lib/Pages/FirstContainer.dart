@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:jazzcash/Pages/API%20Screens/Login.dart';
 
 class FirstContainer extends StatefulWidget {
-  const FirstContainer({Key? key}) : super(key: key);
+  const FirstContainer({Key? key, required }) : super(key: key);
 
   @override
   State<FirstContainer> createState() => _FirstContainerState();

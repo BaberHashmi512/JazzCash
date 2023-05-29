@@ -1,4 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:jazzcash/Pages/API%20Screens/Signup.dart';
+import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -8,12 +14,15 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
   final _formKey = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
+  final _phoneNumberController = TextEditingController();
 
   @override
   void dispose() {
     _passwordController.dispose();
+    _phoneNumberController.dispose();
     super.dispose();
   }
 
@@ -34,12 +43,15 @@ class _LoginState extends State<Login> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 100,),
-                Image.asset("assets/images/Jazz_cash_logo.png",
-                  width: 280,),
-                SizedBox(height: 100,),
+                const SizedBox(height: 100,),
+                Image.asset(
+                  "assets/images/Jazz_cash_logo.png",
+                  width: 280,
+                ),
+                const SizedBox(height: 100,),
                 TextFormField(
                   keyboardType: TextInputType.phone,
+                  controller: _phoneNumberController,
                   decoration: InputDecoration(
                     labelText: 'Phone Number',
                     border: OutlineInputBorder(
@@ -50,15 +62,24 @@ class _LoginState extends State<Login> {
                     if (value == null || value.isEmpty) {
                       return 'Please enter a phone number.';
                     }
-                    final phoneRegex = RegExp(r'^03[0-9]{9}$');
-                    if (!phoneRegex.hasMatch(value)) {
-                      return 'Please enter a valid phone number starting with 03 and with a total of 11 digits.';
+                    RegExp regex = RegExp(r'^03[0-9]{2}(?!1234567)(?!1111111)(?!7654321)[0-9]{7}$');
+                    String input = '0323456789';
+
+                    if (regex.hasMatch(input)) {
+                      print('Valid input');
+                    } else {
+                      print('Invalid input');
                     }
                     return null; // Validation passed
                   },
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    LengthLimitingTextInputFormatter(11),
+                    Login(mask: "03#########",),
+                  ],
                   obscureText: true,
                   controller: _passwordController,
                   decoration: InputDecoration(
@@ -83,17 +104,13 @@ class _LoginState extends State<Login> {
                 const SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: () {
+                    // login(_phoneNumberController.text.toString(), _passwordController.text.toString());
                     if (_formKey.currentState!.validate()) {
-                      // Form validation passed, perform login
-                      String phoneNumber = ''; // Get the phone number value
+                      String phoneNumber = _phoneNumberController.text;
                       String password = _passwordController.text;
-                      performLogin(phoneNumber, password);
+                      login(phoneNumber, password);
                     }
                   },
-                  child: const Text(
-                    'Login',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,
                     padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
@@ -101,19 +118,27 @@ class _LoginState extends State<Login> {
                       borderRadius: BorderRadius.circular(30),
                     ),
                   ),
+                  child: const Text(
+                    'Login',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  ),
                 ),
                 const SizedBox(height: 40),
                 Row(
                   children: [
-                    Text(
-                      "Already have an Account?    ",
-                      style: const TextStyle(fontSize: 20),
+                    const Text(
+                      "Already have an Account? ",
+                      style: TextStyle(fontSize: 20),
                     ),
                     GestureDetector(
-                      onTap: (){},
-                      child: Text(
+                      onTap: (){
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (ctx)=> SignupPage())
+                        );
+                      },
+                      child: const Text(
                         "Register now",
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 20,
                           color: Colors.red,
                           decoration: TextDecoration.underline,
@@ -140,5 +165,32 @@ class _LoginState extends State<Login> {
 
   bool isAlphaNumeric(String value) {
     return RegExp(r'^[a-zA-Z0-9]+$').hasMatch(value);
+  }
+
+  void login(String phoneNumber , password) async {
+
+    try{
+      Response response = await post(
+          Uri.parse('http://192.168.100.169:8000/api/login/'),
+          body: {
+            'phone_number' : phoneNumber,
+            'password' : password
+          }
+      );
+
+      if(response.statusCode == 200){
+
+        var data = jsonDecode(response.body.toString());
+        print(data['wallet']);
+        print(data['token']);
+        print('Login successfully');
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('token', data['token']);
+      } else {
+        print('failed');
+      }
+    }catch(e){
+      print(e.toString());
+    }
   }
 }
