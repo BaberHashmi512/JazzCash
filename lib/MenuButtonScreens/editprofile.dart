@@ -1,18 +1,66 @@
+import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
-class SignupPage extends StatefulWidget {
-  const SignupPage({super.key});
+class EditProfile extends StatefulWidget {
+  const EditProfile({Key? key}) : super(key: key);
 
   @override
-  _SignupPageState createState() => _SignupPageState();
+  State<EditProfile> createState() => _EditProfileState();
 }
 
-class _SignupPageState extends State<SignupPage> {
+class _EditProfileState extends State<EditProfile> {
+  ImageProvider? _selectedImage=Image.asset("assets/images/Baber.photho.jpg") as ImageProvider<Object>?;
+
+  Future<void> getImage() async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Choose an Image"),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                GestureDetector(
+                  child: Text("Camera"),
+                  onTap: () {
+                    Navigator.pop(context);
+                    _pickImage(ImageSource.camera);
+                  },
+                ),
+                SizedBox(height: 10),
+                GestureDetector(
+                  child: Text("Gallery"),
+                  onTap: () {
+                    Navigator.pop(context);
+                    _pickImage(ImageSource.gallery);
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _pickImage(ImageSource source) async {
+    final picker = ImagePicker();
+    final pickedImage = await picker.pickImage(source: source);
+    if (pickedImage != null) {
+      setState(() {
+        _selectedImage = FileImage(File(pickedImage.path));
+      });
+    }
+  }
+  bool isVisible = false;
   int? _value = 1;
   final _formKey = GlobalKey<FormState>();
   final _phoneRegex = RegExp(r'^03[0-9]{9}$');
   final _cnicRegex = RegExp(r'^[0-9]{13}$');
+  TextEditingController dateinput = TextEditingController();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -33,15 +81,14 @@ class _SignupPageState extends State<SignupPage> {
       _formKey.currentState!.reset();
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        title: const Text("Edit Profile"),
         backgroundColor: Colors.black,
         elevation: 0,
-        title: const Text('Signup to JazzCash'),
-        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -50,9 +97,30 @@ class _SignupPageState extends State<SignupPage> {
             key: _formKey,
             child: Column(
               children: <Widget>[
+                CircleAvatar(
+                  radius: 70,
+                  backgroundImage: _selectedImage,
+                  child: Stack(
+                    children: [
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: CircleAvatar(
+                          radius: 18,
+                          backgroundColor: Colors.white70,
+                          child: GestureDetector(
+                              onTap: getImage,
+                              child: Icon(CupertinoIcons.camera)),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(height: 40,),
                 TextFormField(
                   controller: _firstNameController,
                   decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.person),
+                      hintText: "Enter your Firstname",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(50),
                       ),
@@ -70,6 +138,8 @@ class _SignupPageState extends State<SignupPage> {
                 TextFormField(
                   controller: _lastNameController,
                   decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.person),
+                      hintText: "Enter your LastName",
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(50),
                       ),
@@ -81,94 +151,42 @@ class _SignupPageState extends State<SignupPage> {
                     return null;
                   },
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      labelText: 'Email'),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  controller: _phoneController,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly,
-                    LengthLimitingTextInputFormatter(11),
-                  ],
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
+                const SizedBox(height: 20),
+                GestureDetector(
+                  child: TextField(
+                    style: TextStyle(color: Colors.green),
+                    controller: dateinput,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        labelStyle: TextStyle(color: Colors.green),
+                        icon: Icon(Icons.calendar_today),
+                        iconColor: Colors.green,
+                        labelText: "Enter Date of Birth"
                     ),
-                    labelText: 'Phone Number',
-                    hintText: 'e.g. 03xxxxxxxxx',
+                    readOnly: true,
+                    onTap: () async {
+                      DateTime? pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(1990),
+                          lastDate: DateTime(2040)
+                      );
+                      if (pickedDate !=null){
+                        print(pickedDate);
+                        String formattedDate =
+                        DateFormat('dd-MM-yyyy').format(pickedDate);
+                        print(
+                            formattedDate);
+                        setState(() {
+                          dateinput.text = formattedDate;
+                        });
+                      } else {
+                        print("Date is not Selected");
+                      }
+                    },
                   ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter your phone number';
-                    }
-                    if (!_phoneRegex.hasMatch(value)) {
-                      return 'Please enter a valid phone number starting with 03';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  controller: _cnicController,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly,
-                    LengthLimitingTextInputFormatter(13),
-                  ],
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    labelText: 'CNIC Number',
-                    hintText: 'e.g. 3630270470273',
-                  ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter your CNIC number';
-                    }
-                    if (!_cnicRegex.hasMatch(value)) {
-                      return 'Please enter a valid CNIC number';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  controller: _passwordController,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      labelText: 'Password'),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter a password';
-                    }
-                    return null;
-                  },
                 ),
                 const SizedBox(
                   height: 20,
@@ -187,7 +205,7 @@ class _SignupPageState extends State<SignupPage> {
                         groupValue: _value,
                         onChanged: (Value) {
                           setState(() {
-                            _value = Value! as int?;
+                            _value = Value!;
                           });
                         }),
                     const SizedBox(width: 10),
@@ -200,7 +218,7 @@ class _SignupPageState extends State<SignupPage> {
                         groupValue: _value,
                         onChanged: (Value) {
                           setState(() {
-                            _value = Value! as int?;
+                            _value = Value!;
                           });
                         }),
                     const SizedBox(width: 10),
@@ -213,7 +231,7 @@ class _SignupPageState extends State<SignupPage> {
                         groupValue: _value,
                         onChanged: (Value) {
                           setState(() {
-                            _value = Value! as int?;
+                            _value = Value!;
                           });
                         }),
                     const SizedBox(width: 10),
@@ -235,7 +253,7 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   onPressed: _submitForm,
                   child: const Text(
-                    'Signup',
+                    'Edit Profile',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                   ),
                 ),

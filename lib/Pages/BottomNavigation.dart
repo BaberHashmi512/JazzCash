@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'FirstScreen.dart';
-import 'Invite.dart';
-import 'Locator.dart';
-import 'Scan_QR.dart';
-import 'SearchScreen.dart';
+import 'BottomNavigationBarScreens/Invite.dart';
+import 'BottomNavigationBarScreens/Locator.dart';
+import 'BottomNavigationBarScreens/Scan_QR.dart';
+import 'BottomNavigationBarScreens/SearchScreen.dart';
 
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({Key? key}) : super(key: key);

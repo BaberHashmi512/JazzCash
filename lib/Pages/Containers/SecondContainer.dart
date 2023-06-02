@@ -22,11 +22,12 @@ class _SecondContainerState extends State<SecondContainer> {
                   "My JazzCash",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
+                    fontSize: 20
                   ),
                 ),
               ),
               const SizedBox(
-                width: 150,
+                width: 170,
               ),
               ElevatedButton.icon(
                   onPressed: () {},
@@ -38,10 +39,11 @@ class _SecondContainerState extends State<SecondContainer> {
                   label: const Text("Edit"))
             ],
           ),
+          SizedBox(height: 10,),
           Row(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 35),
                 child: buildIconButton(
                     "assets/images/paper-plane.svg", "Money Transfer", () {
                   debugPrint("shit is about to get real");
@@ -73,8 +75,8 @@ class _SecondContainerState extends State<SecondContainer> {
           const SizedBox(
             height: 18,
           ),
-          Row(
-            children: const [
+          const Row(
+            children: [
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
@@ -90,7 +92,7 @@ class _SecondContainerState extends State<SecondContainer> {
           Row(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 35),
                 child:
                     buildIconButton("assets/images/person.svg", "Debit Card", () {
                   debugPrint("shit is about to get real");

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:jazzcash/Pages/AppBar.dart';
-import 'package:jazzcash/Pages/SecondContainer.dart';
+import 'package:jazzcash/Pages/Containers/SecondContainer.dart';
 
-import 'FirstContainer.dart';
+import 'Containers/FirstContainer.dart';
 
 class FirstScreen extends StatefulWidget {
   const FirstScreen({Key? key}) : super(key: key);

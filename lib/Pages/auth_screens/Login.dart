@@ -1,10 +1,11 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:jazzcash/Pages/API%20Screens/Signup.dart';
+import 'package:jazzcash/Pages/auth_screens/Signup.dart';
 import 'package:http/http.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:jazzcash/Pages/BottomNavigation.dart';
+import 'package:jazzcash/Pages/helpers/ApiUrls.dart';
+import 'package:jazzcash/Pages/helpers/MySharedPrefClass.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -14,7 +15,12 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-
+  var maskFormatter = MaskTextInputFormatter(
+    filter: {"#": RegExp(r'\d')},
+    mask: "03#########",
+    type: MaskAutoCompletionType.eager,
+  );
+  bool isVisible = false;
   final _formKey = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
   final _phoneNumberController = TextEditingController();
@@ -43,16 +49,23 @@ class _LoginState extends State<Login> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 100,),
+                const SizedBox(
+                  height: 100,
+                ),
                 Image.asset(
                   "assets/images/Jazz_cash_logo.png",
                   width: 280,
                 ),
-                const SizedBox(height: 100,),
+                const SizedBox(
+                  height: 100,
+                ),
                 TextFormField(
+                  inputFormatters: [maskFormatter],
                   keyboardType: TextInputType.phone,
                   controller: _phoneNumberController,
                   decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.numbers),
+                    hintText: "03001234567",
                     labelText: 'Phone Number',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(50),
@@ -62,7 +75,8 @@ class _LoginState extends State<Login> {
                     if (value == null || value.isEmpty) {
                       return 'Please enter a phone number.';
                     }
-                    RegExp regex = RegExp(r'^03[0-9]{2}(?!1234567)(?!1111111)(?!7654321)[0-9]{7}$');
+                    RegExp regex = RegExp(
+                        r'^03\d{2}(?!1234567)(?!1111111)(?!7654321)\d{7}$');
                     String input = '0323456789';
 
                     if (regex.hasMatch(input)) {
@@ -75,14 +89,27 @@ class _LoginState extends State<Login> {
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
-                  inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly,
-                    LengthLimitingTextInputFormatter(11),
-                    Login(mask: "03#########",),
-                  ],
-                  obscureText: true,
+                  obscureText: !isVisible,
+                  // obscureText: true,
                   controller: _passwordController,
                   decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          isVisible = !isVisible;
+                        });
+                      },
+                      icon: isVisible
+                          ? const Icon(
+                        Icons.visibility,
+                        color: Colors.black,
+                      )
+                          : const Icon(
+                        Icons.visibility_off,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    prefixIcon: const Icon(Icons.vpn_key),
                     labelText: 'Password',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(50),
@@ -113,7 +140,8 @@ class _LoginState extends State<Login> {
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,
-                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 40, vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
@@ -131,10 +159,9 @@ class _LoginState extends State<Login> {
                       style: TextStyle(fontSize: 20),
                     ),
                     GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (ctx)=> SignupPage())
-                        );
+                            MaterialPageRoute(builder: (ctx) => const SignupPage()));
                       },
                       child: const Text(
                         "Register now",
@@ -156,40 +183,38 @@ class _LoginState extends State<Login> {
     );
   }
 
-  void performLogin(String phoneNumber, String password) {
-    // Add your login logic here
-    print('Performing login...');
-    print('Phone Number: $phoneNumber');
-    print('Password: $password');
-  }
+  //
+  // void performLogin(String phoneNumber, String password) {
+  //   // Add your login logic here
+  //   print('Performing login...');
+  //   print('Phone Number: $phoneNumber');
+  //   print('Password: $password');
+  // }
 
   bool isAlphaNumeric(String value) {
     return RegExp(r'^[a-zA-Z0-9]+$').hasMatch(value);
   }
 
-  void login(String phoneNumber , password) async {
-
-    try{
+  void login(String phoneNumber, password) async {
+    try {
       Response response = await post(
-          Uri.parse('http://192.168.100.169:8000/api/login/'),
-          body: {
-            'phone_number' : phoneNumber,
-            'password' : password
-          }
-      );
+          Uri.parse(Apis.loginApi),
+          body: {'phone_number': phoneNumber, 'password': password});
 
-      if(response.statusCode == 200){
-
+      if (response.statusCode == 200) {
         var data = jsonDecode(response.body.toString());
         print(data['wallet']);
         print(data['token']);
         print('Login successfully');
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('token', data['token']);
+        MySharedPrefClass.preferences!.setString('token', data['token']);
+        // ignore: use_build_context_synchronously
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context)=>const BottomNavigation())
+        );
       } else {
         print('failed');
       }
-    }catch(e){
+    } catch (e) {
       print(e.toString());
     }
   }
