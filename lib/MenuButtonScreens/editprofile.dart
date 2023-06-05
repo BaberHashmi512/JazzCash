@@ -12,91 +12,37 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  ImageProvider? _selectedImage=Image.asset("assets/images/Baber.photho.jpg") as ImageProvider<Object>?;
-
-  Future<void> getImage() async {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("Choose an Image"),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                GestureDetector(
-                  child: Text("Camera"),
-                  onTap: () {
-                    Navigator.pop(context);
-                    _pickImage(ImageSource.camera);
-                  },
-                ),
-                SizedBox(height: 10),
-                GestureDetector(
-                  child: Text("Gallery"),
-                  onTap: () {
-                    Navigator.pop(context);
-                    _pickImage(ImageSource.gallery);
-                  },
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  Future<void> _pickImage(ImageSource source) async {
-    final picker = ImagePicker();
-    final pickedImage = await picker.pickImage(source: source);
-    if (pickedImage != null) {
-      setState(() {
-        _selectedImage = FileImage(File(pickedImage.path));
-      });
-    }
-  }
-  bool isVisible = false;
-  int? _value = 1;
-  final _formKey = GlobalKey<FormState>();
-  final _phoneRegex = RegExp(r'^03[0-9]{9}$');
-  final _cnicRegex = RegExp(r'^[0-9]{13}$');
+  ImageProvider? _selectedImage;
+  final TextEditingController _fnamecontroller = TextEditingController();
+  final TextEditingController _lnamecontroller = TextEditingController();
   TextEditingController dateinput = TextEditingController();
-  final TextEditingController _firstNameController = TextEditingController();
-  final TextEditingController _lastNameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _cnicController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  int? _value = 1;
 
-  void _submitForm() {
-    if (_formKey.currentState!.validate()) {
-      // Perform signup logic here
-      String firstName = _firstNameController.text;
-      String lastName = _lastNameController.text;
-      String email = _emailController.text;
-      String phone = _phoneController.text;
-      String cnic = _cnicController.text;
-      String password = _passwordController.text;
 
-      _formKey.currentState!.reset();
-    }
+
+  @override
+  void initState() {
+    super.initState();
+    _fnamecontroller.text = 'Baber';
+    _lnamecontroller.text = 'Hashmi';
+    dateinput.text = "22/04/2000";
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text("Edit Profile"),
-        backgroundColor: Colors.black,
-        elevation: 0,
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Form(
-            key: _formKey,
+        appBar: AppBar(
+          centerTitle: true,
+          elevation: 0,
+          backgroundColor: Colors.black,
+          title: const Text("Edit Profile"),
+        ),
+        body: Container(
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
             child: Column(
-              children: <Widget>[
+              children: [
+                const SizedBox(height: 10,),
                 CircleAvatar(
                   radius: 70,
                   backgroundImage: _selectedImage,
@@ -109,49 +55,41 @@ class _EditProfileState extends State<EditProfile> {
                           backgroundColor: Colors.white70,
                           child: GestureDetector(
                               onTap: getImage,
-                              child: Icon(CupertinoIcons.camera)),
+                              child: const Icon(CupertinoIcons.camera)),
                         ),
                       )
                     ],
                   ),
                 ),
-                SizedBox(height: 40,),
-                TextFormField(
-                  controller: _firstNameController,
+                const SizedBox(
+                  height: 40,
+                ),
+                TextField(
+                  controller: _fnamecontroller,
                   decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.person),
-                      hintText: "Enter your Firstname",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      labelText: 'First Name'),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter your first name';
-                    }
-                    return null;
-                  },
+                    prefixIcon: Icon(Icons.person),
+                    hintText: "Edit First Name",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                  ),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                TextFormField(
-                  controller: _lastNameController,
+                TextField(
+                  controller: _lnamecontroller,
                   decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.person),
-                      hintText: "Enter your LastName",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      labelText: 'Last Name'),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter your last name';
-                    }
-                    return null;
-                  },
+                    prefixIcon: Icon(Icons.person),
+                    hintText: "Edit Last Name",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                  ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(
+                  height: 20,
+                ),
                 GestureDetector(
                   child: TextField(
                     style: TextStyle(color: Colors.green),
@@ -160,25 +98,22 @@ class _EditProfileState extends State<EditProfile> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50),
                         ),
-                        labelStyle: TextStyle(color: Colors.green),
-                        icon: Icon(Icons.calendar_today),
-                        iconColor: Colors.green,
-                        labelText: "Enter Date of Birth"
-                    ),
+                        labelStyle: const TextStyle(color: Colors.green),
+                        prefixIcon:
+                            const Icon(Icons.calendar_today, color: Colors.green),
+                        labelText: "Enter Date of Birth"),
                     readOnly: true,
                     onTap: () async {
                       DateTime? pickedDate = await showDatePicker(
                           context: context,
                           initialDate: DateTime.now(),
                           firstDate: DateTime(1990),
-                          lastDate: DateTime(2040)
-                      );
-                      if (pickedDate !=null){
+                          lastDate: DateTime(2040));
+                      if (pickedDate != null) {
                         print(pickedDate);
                         String formattedDate =
-                        DateFormat('dd-MM-yyyy').format(pickedDate);
-                        print(
-                            formattedDate);
+                            DateFormat('dd-MM-yyyy').format(pickedDate);
+                        print(formattedDate);
                         setState(() {
                           dateinput.text = formattedDate;
                         });
@@ -197,6 +132,9 @@ class _EditProfileState extends State<EditProfile> {
                       fontWeight: FontWeight.w900,
                       color: Color(0xffA87B5D),
                       fontSize: 30),
+                ),
+                const SizedBox(
+                  height: 20,
                 ),
                 Row(
                   children: [
@@ -241,27 +179,62 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 20,),
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 40, vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 40, vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
                     ),
-                  ),
-                  onPressed: _submitForm,
-                  child: const Text(
-                    'Edit Profile',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                  ),
+                    onPressed: () {},
+                    child: const Text("Edit profile"))
+              ],
+            ),
+          ),
+        ));
+  }
+  Future<void> getImage() async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Choose an Image"),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                GestureDetector(
+                  child: Text("Camera"),
+                  onTap: () {
+                    Navigator.pop(context);
+                    _pickImage(ImageSource.camera);
+                  },
+                ),
+                SizedBox(height: 10),
+                GestureDetector(
+                  child: Text("Gallery"),
+                  onTap: () {
+                    Navigator.pop(context);
+                    _pickImage(ImageSource.gallery);
+                  },
                 ),
               ],
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
+  }
+
+  Future<void> _pickImage(ImageSource source) async {
+    final picker = ImagePicker();
+    final pickedImage = await picker.pickImage(source: source);
+    if (pickedImage != null) {
+      setState(() {
+        _selectedImage = FileImage(File(pickedImage.path));
+      });
+    }
   }
 }

@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 import 'package:jazzcash/Pages/auth_screens/Login.dart';
 import 'package:jazzcash/Pages/helpers/ApiUrls.dart';
 import 'package:jazzcash/Pages/profile.dart';
-
 import '../helpers/MySharedPrefClass.dart';
 
 class FirstContainer extends StatefulWidget {
@@ -33,9 +32,9 @@ class _FirstContainerState extends State<FirstContainer> {
   }
 
   final double number = 84.59;
-  String imgPath = "assets/images/avatar.png";
+  String imgPath = "";
   String name = "Baber Ali Hashmi";
-  String money = "";
+  int money = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +44,12 @@ class _FirstContainerState extends State<FirstContainer> {
     final wholeNumber = parts[0];
     final decimalPart = parts[1];
     return Container(
+
       decoration: const BoxDecoration(
         color: Colors.black87,
         borderRadius: BorderRadius.only(bottomLeft: Radius.circular(25)),
       ),
+
       child: Column(
         children: [
           Row(
@@ -115,7 +116,7 @@ class _FirstContainerState extends State<FirstContainer> {
           token != null ? Container(
             child:Row(
               children: [
-                Text(
+                const Text(
                   "  Rs. ",
                   style: TextStyle(
                       fontSize: 40,
@@ -123,7 +124,7 @@ class _FirstContainerState extends State<FirstContainer> {
                       color: Colors.white),
                 ),
                 Text(
-                  money,
+                  money.toString(),
                   style: const TextStyle(
                       fontSize: 45,
                       fontWeight: FontWeight.bold,
@@ -174,9 +175,7 @@ class _FirstContainerState extends State<FirstContainer> {
                             ),
                           ),
                         ],
-                      )
-
-                      //
+                      ),
                       ),
                 ]),
               ],
@@ -211,7 +210,7 @@ class _FirstContainerState extends State<FirstContainer> {
                             borderRadius: BorderRadius.circular(20))),
                     onPressed: () {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context)=>Profile())
+                          MaterialPageRoute(builder: (context)=>const Profile())
                       );
                     },
                     icon: const Icon(Icons.add_card),
@@ -233,7 +232,7 @@ class _FirstContainerState extends State<FirstContainer> {
       }
 
       Response response = await get(
-          Uri.parse('http://192.168.100.169:8000/api/profile/'),
+          Uri.parse(Apis.profileApi),
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
@@ -249,6 +248,7 @@ class _FirstContainerState extends State<FirstContainer> {
           imgPath = Apis.baseUrl + data['image'] ?? "";
           name = data['fname'];
           money = data['wallet'];
+          print("money : $money, wallet: $data['wallet]");
         });
       } else {
         print('Request failed with status code: ${response.statusCode}');
@@ -258,35 +258,3 @@ class _FirstContainerState extends State<FirstContainer> {
     }
   }
 }
-// const Icon(
-//   Icons.refresh,
-//   color: Colors.yellow,
-// ),
-// const Padding(padding: EdgeInsets.only(left: 100)),
-// ElevatedButton(
-//     onPressed: () {},
-//     style: ElevatedButton.styleFrom(
-//         backgroundColor: Colors.grey,
-//         shape: RoundedRectangleBorder(
-//             borderRadius: BorderRadius.circular(12))),
-//     child: const Text(
-//       "Loan",
-//       style: TextStyle(
-//           fontWeight: FontWeight.bold, color: Colors.yellow),
-//     )),,,,,,,,,,,,,,,,
-
-// Text(
-//   wholeNumber,
-//   style: const TextStyle(
-//       fontSize: 45,
-//       fontWeight: FontWeight.bold,
-//       color: Colors.white),
-// ),
-// const SizedBox(width: 8),
-// Text(
-//   ".$decimalPart",
-//   style: const TextStyle(
-//       fontSize: 20,
-//       fontWeight: FontWeight.bold,
-//       color: Colors.white),
-// ),

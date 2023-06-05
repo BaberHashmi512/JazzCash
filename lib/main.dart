@@ -11,7 +11,7 @@ void main() async{
     MaterialApp(
       theme: ThemeData(),
       debugShowCheckedModeBanner: false,
-      home: const BottomNavigation()
+      home: BottomNavigation()
       // BottomNavigation(),
     ),
   );

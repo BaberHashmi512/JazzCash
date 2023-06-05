@@ -286,10 +286,9 @@ class _SignupPageState extends State<SignupPage> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50),
                         ),
-                      labelStyle: TextStyle(color: Colors.green),
-                      icon: Icon(Icons.calendar_today),
-                      iconColor: Colors.green,
-                      labelText: "Enter Date of Birth"
+                        labelStyle: TextStyle(color: Colors.green),
+                        prefixIcon: Icon(Icons.calendar_today, color: Colors.green),
+                        labelText: "Enter Date of Birth"
                     ),
                     readOnly: true,
                     onTap: () async {
@@ -301,10 +300,8 @@ class _SignupPageState extends State<SignupPage> {
                       );
                       if (pickedDate !=null){
                         print(pickedDate);
-                        String formattedDate =
-                            DateFormat('dd-MM-yyyy').format(pickedDate);
-                        print(
-                            formattedDate);
+                        String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
+                        print(formattedDate);
                         setState(() {
                           dateinput.text = formattedDate;
                         });

@@ -208,9 +208,16 @@ class _LoginState extends State<Login> {
         print('Login successfully');
         MySharedPrefClass.preferences!.setString('token', data['token']);
         // ignore: use_build_context_synchronously
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context)=>const BottomNavigation())
-        );
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+                builder:
+                    (context) =>
+                const BottomNavigation()),
+                (route) => false);
+        // Navigator.pushReplacement(context,
+        //     MaterialPageRoute(builder: (context)=>const BottomNavigation())
+        // );
       } else {
         print('failed');
       }

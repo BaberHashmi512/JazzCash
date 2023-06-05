@@ -21,14 +21,16 @@ class _EditPasswordState extends State<EditPassword> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(height: 50,),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Image.asset("assets/images/changepassword.jpeg",width: 280,),
+              child: Image.asset("assets/images/Jazz_cash_logo.png",width: 280,),
             ),
             SizedBox(height: 50,),
             TextField(
               obscureText: true,
               decoration: InputDecoration(
+                prefixIcon: Icon(Icons.password_sharp),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(50),
                 ),
@@ -39,6 +41,7 @@ class _EditPasswordState extends State<EditPassword> {
             TextField(
               obscureText: true,
               decoration: InputDecoration(
+                prefixIcon: Icon(Icons.password_sharp),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(50),
                 ),
@@ -49,6 +52,7 @@ class _EditPasswordState extends State<EditPassword> {
             TextField(
               obscureText: true,
               decoration: InputDecoration(
+                prefixIcon: Icon(Icons.password_sharp),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(50),
                 ),
