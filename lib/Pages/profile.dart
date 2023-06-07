@@ -1,13 +1,9 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:jazzcash/MenuButtonScreens/edit_password.dart';
 import 'package:jazzcash/MenuButtonScreens/editprofile.dart';
 import 'package:jazzcash/Pages/BottomNavigation.dart';
-
 import 'helpers/ApiUrls.dart';
 import 'helpers/MySharedPrefClass.dart';
 
@@ -20,23 +16,24 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   String? token = MySharedPrefClass.preferences!.getString('token');
+
   @override
   void initState() {
     fetchData(token);
     super.initState();
-
   }
 
-  ImageProvider? _selectedImage;
   String imgPath = "";
-  String name = "Baber Ali Hashmi";
+  String firstname = "Baber Ali ";
+  String lastname = "Hashmi";
   String number = "03186487044";
-  String mail = "";
-  int idnumber = 0;
+  String mail = "baberhashmi512@gmail.com";
+  int idnumber = 36302451202897;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.black38,
       appBar: AppBar(
         actions: [
           Theme(
@@ -44,149 +41,155 @@ class _ProfileState extends State<Profile> {
                 cardColor: Colors.black,
                 iconTheme: const IconThemeData(color: Colors.white)),
             child: PopupMenuButton(
+                elevation: 0,
+                shape: Border.all(width: 0.5),
+                offset: const Offset(0, kToolbarHeight),
                 icon: const Icon(Icons.more_vert),
-                itemBuilder: (_) => [
-                      PopupMenuItem(
-                        child: Container(
-                          color: Colors.black,
-                          child: Column(
+                itemBuilder: (_) =>
+                [
+                  PopupMenuItem(
+                    child: Container(
+                      color: Colors.black,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Row(
                             children: [
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Row(
-                                children: [
-                                  const Icon(
-                                    Icons.edit,
-                                    color: Colors.yellow,
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const EditProfile()));
-                                      },
-                                      child: const Text(
-                                        "Edit Profile",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold),
-                                      ))
-                                ],
+                              const Icon(
+                                Icons.edit,
+                                color: Colors.yellow,
                               ),
                               const SizedBox(
-                                height: 5,
+                                width: 10,
                               ),
-                              Row(
-                                children: [
-                                  const Icon(
-                                    Icons.password_outlined,
-                                    color: Colors.yellow,
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const EditPassword()));
-                                      },
-                                      child: const Text(
-                                        "Edit Password",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold),
-                                      ))
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              const Divider(
-                                height: 0.5,
-                                color: Colors.black,
-                              ),
-                              Row(
-                                children: [
-                                  const Icon(
-                                    Icons.logout,
-                                    color: Colors.yellow,
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  TextButton(
-                                      onPressed: () {
-                                        showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) =>
-                                                AlertDialog(
-                                                  title: Text("Logout"),
-                                                  content: const Text(
-                                                    "Are you Sure You want to Logout",
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Colors.black),
-                                                  ),
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: () {
-                                                        Navigator.pop(context);
-                                                      },
-                                                      child: const Text(
-                                                        "Cancel",
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: Colors
-                                                                .greenAccent),
-                                                      ),
-                                                    ),
-                                                    TextButton(
-                                                        onPressed: () {
-                                                          Navigator.pushAndRemoveUntil(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          const BottomNavigation()),
-                                                              (route) => false);
-                                                        },
-                                                        child: const Text(
-                                                          "LogOut",
-                                                          style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color:
-                                                                  Colors.red),
-                                                        ))
-                                                  ],
-                                                ));
-                                      },
-                                      child: const Text(
-                                        "Log out",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ))
-                                ],
-                              ),
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                            const EditProfile()));
+                                  },
+                                  child: const Text(
+                                    "Edit Profile",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ))
                             ],
                           ),
-                        ),
-                      )
-                    ]),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.password_outlined,
+                                color: Colors.yellow,
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                            const EditPassword()));
+                                  },
+                                  child: const Text(
+                                    "Change Password",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ))
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          // const Divider(
+                          //   height: 0.2,
+                          //   color: Colors.grey,
+                          // ),
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.logout,
+                                color: Colors.yellow,
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              TextButton(
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            AlertDialog(
+                                              title: const Text("Logout"),
+                                              content: const Text(
+                                                "Are you Sure You want to Logout",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                    FontWeight.bold,
+                                                    color: Colors.black),
+                                              ),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: const Text(
+                                                    "Cancel",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                        FontWeight.bold,
+                                                        color: Colors
+                                                            .greenAccent),
+                                                  ),
+                                                ),
+                                                TextButton(
+                                                    onPressed: () {
+                                                      Navigator
+                                                          .pushAndRemoveUntil(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder:
+                                                                  (context) =>
+                                                              const BottomNavigation()),
+                                                              (route) => false);
+                                                    },
+                                                    child: const Text(
+                                                      "LogOut",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                          FontWeight
+                                                              .bold,
+                                                          color:
+                                                          Colors.red),
+                                                    ))
+                                              ],
+                                            ));
+                                  },
+                                  child: const Text(
+                                    "Log out",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ))
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ]),
           )
         ],
         elevation: 0,
@@ -197,79 +200,80 @@ class _ProfileState extends State<Profile> {
       body: Column(
         children: [
           const Divider(
-            height: 0.5,
-            color: Colors.white,
+            height: 0.2,
+            color: Colors.grey,
           ),
+          // const SizedBox(
+          //   height: 20,
+          // ),
+          // // const Center(
+          // //   child: Text(
+          // //     "Profile Details",
+          // //     style: TextStyle(
+          // //         color: Colors.white,
+          // //         fontWeight: FontWeight.bold,
+          // //         fontSize: 24),
+          // //   ),
+          // // ),
+          // const SizedBox(
+          //   height: 20,
+          // ),
+          // const Divider(
+          //   height: 0.5,
+          //   color: Colors.white,
+          // ),
           const SizedBox(
             height: 20,
-          ),
-          const Center(
-            child: Text(
-              "Profile Details",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24),
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          const Divider(
-            height: 0.5,
-            color: Colors.white,
-          ),
-          const SizedBox(
-            height: 10,
           ),
           Row(
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: CircleAvatar(
-                  radius: 35,
-                  backgroundImage: _selectedImage,
-                  child: Stack(
-                    children: [
-                      Align(
-                        alignment: Alignment.bottomRight,
-                        child: CircleAvatar(
-                          radius: 15,
-                          backgroundColor: Colors.white70,
-                          child: GestureDetector(
-                              onTap: getImage,
-                              child: const Icon(CupertinoIcons.camera)),
-                        ),
-                      )
-                    ],
+                  backgroundColor: Colors.yellow,
+                  radius: 32,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: token != null &&
+                            imgPath != null &&
+                            imgPath.isNotEmpty
+                            ? NetworkImage(imgPath)
+                            : const AssetImage('assets/images/avatar.png')
+                        as ImageProvider,
+                      ),
+                    ),
                   ),
                 ),
               ),
-               Column(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    name,
+                    "$firstname $lastname",
                     // "Baber Ali Hashmi",
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 24,
+                        fontSize: 34,
                         color: Colors.white),
                   ),
                   Row(
                     children: [
-                      Text(
-                        "Account:",
-                        style: TextStyle(color: Colors.white),
+                      const Text(
+                        "Account: ",
+                        style: TextStyle(color: Colors.white,fontSize: 20),
                       ),
                       Text(
                         number,
                         // "03001234567",
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white,fontSize: 20),
                       )
                     ],
                   ),
-                  SizedBox(
-                    height: 10,
+                  const SizedBox(
+                    height: 20,
                   ),
                 ],
               ),
@@ -279,15 +283,15 @@ class _ProfileState extends State<Profile> {
             height: 20,
           ),
           const Divider(
-            height: 0.5,
-            color: Colors.white,
+            height: 0.2,
+            color: Colors.grey,
           ),
           const SizedBox(
             height: 20,
           ),
-           Row(
+          Row(
             children: [
-              Padding(
+              const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: Icon(
                   Icons.email_outlined,
@@ -296,17 +300,20 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Email",
-                      style: TextStyle(color: Colors.grey),
+                      style: TextStyle(color: Colors.grey,
+                          // fontWeight:FontWeight.bold,
+                          fontSize: 20),
                     ),
                     Text(
                       mail,
                       // "Baberhashmi512@gmail.com",
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white,fontSize: 20),
                     )
                   ],
                 ),
@@ -317,15 +324,15 @@ class _ProfileState extends State<Profile> {
             height: 20,
           ),
           const Divider(
-            height: 0.5,
-            color: Colors.white,
+            height: 0.2,
+            color: Colors.grey,
           ),
           const SizedBox(
             height: 20,
           ),
           Row(
             children: [
-              Padding(
+              const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: Icon(
                   Icons.credit_card_outlined,
@@ -334,17 +341,20 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "ID Card Number",
-                      style: TextStyle(color: Colors.grey),
+                      style: TextStyle(color: Colors.grey,
+                          // fontWeight:FontWeight.bold,
+                          fontSize: 20),
                     ),
                     Text(
                       idnumber.toString(),
                       // "3630270470271",
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white,fontSize: 20),
                     )
                   ],
                 ),
@@ -355,8 +365,8 @@ class _ProfileState extends State<Profile> {
             height: 20,
           ),
           const Divider(
-            height: 0.5,
-            color: Colors.white,
+            height: 0.2,
+            color: Colors.grey,
           ),
           const SizedBox(
             height: 20,
@@ -374,27 +384,19 @@ class _ProfileState extends State<Profile> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       "Password",
-                      style: TextStyle(color: Colors.grey),
+                      style: TextStyle(color: Colors.grey,
+                          // fontWeight:FontWeight.bold,
+                          fontSize: 20),
                     ),
                     Text(
-                      "*************",
-                      style: TextStyle(color: Colors.white),
+                      "**********",
+                      style: TextStyle(color: Colors.white,fontSize: 20),
                     )
                   ],
-                ),
-              ),
-              Spacer(),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 50),
-                child: Text(
-                  "Edit",
-                  style: TextStyle(
-                      color: Colors.grey,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20),
                 ),
               ),
             ],
@@ -403,51 +405,17 @@ class _ProfileState extends State<Profile> {
             height: 20,
           ),
           const Divider(
-            height: 0.5,
-            color: Colors.white,
+            height: 0.2,
+            color: Colors.grey,
           ),
           const SizedBox(
             height: 20,
           ),
-          // const Row(
-          //   children: [
-          //     Padding(
-          //       padding: EdgeInsets.symmetric(horizontal: 10),
-          //       child: Icon(
-          //         Icons.person,
-          //         color: Colors.yellow,
-          //         size: 30,
-          //       ),
-          //     ),
-          //     Padding(
-          //       padding: EdgeInsets.symmetric(horizontal: 20),
-          //       child: Column(
-          //         children: [
-          //           Text(
-          //             "Gender",
-          //             style: TextStyle(color: Colors.grey),
-          //           ),
-          //           Text(
-          //             "Male",
-          //             style: TextStyle(color: Colors.white),
-          //           )
-          //         ],
-          //       ),
-          //     ),
-          //   ],
-          // ),
-          // const SizedBox(
-          //   height: 20,
-          // ),
-          // const Divider(
-          //   height: 0.5,
-          //   color: Colors.white,
-          // )
-          // StringInterpolation
         ],
       ),
     );
   }
+
   void fetchData(mToken) async {
     try {
       if (mToken == null || mToken == "") {
@@ -456,13 +424,11 @@ class _ProfileState extends State<Profile> {
         return;
       }
 
-      Response response = await get(
-          Uri.parse(Apis.profileApi),
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': 'Token $mToken',
-          });
+      Response response = await get(Uri.parse(Apis.profileApi), headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Token $mToken',
+      });
 
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body.toString());
@@ -471,11 +437,11 @@ class _ProfileState extends State<Profile> {
         print(data['fname']);
         setState(() {
           imgPath = Apis.baseUrl + data['image'] ?? "";
-          name = data['fname'];
+          firstname = data['fname'];
+          lastname = data['lname'];
           number = data['phone_number'];
           mail = data['email'];
           idnumber = data['cnic'];
-
         });
       } else {
         print('Request failed with status code: ${response.statusCode}');
@@ -484,46 +450,6 @@ class _ProfileState extends State<Profile> {
       print("error: $e");
     }
   }
-
-  Future<void> getImage() async {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("Choose an Image"),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                GestureDetector(
-                  child: Text("Camera"),
-                  onTap: () {
-                    Navigator.pop(context);
-                    _pickImage(ImageSource.camera);
-                  },
-                ),
-                SizedBox(height: 10),
-                GestureDetector(
-                  child: Text("Gallery"),
-                  onTap: () {
-                    Navigator.pop(context);
-                    _pickImage(ImageSource.gallery);
-                  },
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  Future<void> _pickImage(ImageSource source) async {
-    final picker = ImagePicker();
-    final pickedImage = await picker.pickImage(source: source);
-    if (pickedImage != null) {
-      setState(() {
-        _selectedImage = FileImage(File(pickedImage.path));
-      });
-    }
-  }
 }
+
+

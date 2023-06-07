@@ -33,7 +33,8 @@ class _FirstContainerState extends State<FirstContainer> {
 
   final double number = 84.59;
   String imgPath = "";
-  String name = "Baber Ali Hashmi";
+  String firstname = "Baber Ali ";
+  String lastname = "Hashmi";
   int money = 0;
 
   @override
@@ -83,6 +84,7 @@ class _FirstContainerState extends State<FirstContainer> {
                 width: 10,
               ),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
                     "Good Afternoon!",
@@ -95,7 +97,7 @@ class _FirstContainerState extends State<FirstContainer> {
                     width: 5,
                   ),
                   Text(
-                    name,
+                    "$firstname $lastname",
                     style: const TextStyle(
                         fontWeight: FontWeight.bold, color: Colors.white),
                   ),
@@ -246,7 +248,8 @@ class _FirstContainerState extends State<FirstContainer> {
         print(data['fname']);
         setState(() {
           imgPath = Apis.baseUrl + data['image'] ?? "";
-          name = data['fname'];
+          firstname = data['fname'];
+          lastname = data['lname'];
           money = data['wallet'];
           print("money : $money, wallet: $data['wallet]");
         });

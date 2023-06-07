@@ -133,9 +133,7 @@ class _LoginState extends State<Login> {
                   onPressed: () {
                     // login(_phoneNumberController.text.toString(), _passwordController.text.toString());
                     if (_formKey.currentState!.validate()) {
-                      String phoneNumber = _phoneNumberController.text;
-                      String password = _passwordController.text;
-                      login(phoneNumber, password);
+                      login(_phoneNumberController.text, _passwordController.text);
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -155,7 +153,7 @@ class _LoginState extends State<Login> {
                 Row(
                   children: [
                     const Text(
-                      "Already have an Account? ",
+                      "   Already have an Account? ",
                       style: TextStyle(fontSize: 20),
                     ),
                     GestureDetector(
@@ -183,23 +181,18 @@ class _LoginState extends State<Login> {
     );
   }
 
-  //
-  // void performLogin(String phoneNumber, String password) {
-  //   // Add your login logic here
-  //   print('Performing login...');
-  //   print('Phone Number: $phoneNumber');
-  //   print('Password: $password');
-  // }
-
   bool isAlphaNumeric(String value) {
     return RegExp(r'^[a-zA-Z0-9]+$').hasMatch(value);
   }
 
-  void login(String phoneNumber, password) async {
+  void login(String phoneNumber, String password) async {
     try {
       Response response = await post(
           Uri.parse(Apis.loginApi),
-          body: {'phone_number': phoneNumber, 'password': password});
+          body: {
+            'phone_number': phoneNumber,
+            'password': password,
+          });
 
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body.toString());

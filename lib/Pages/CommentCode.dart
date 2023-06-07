@@ -377,3 +377,22 @@
 //     );
 //   }
 // }
+// Spacer(),
+// Padding(
+//   padding: EdgeInsets.symmetric(horizontal: 50),
+//   child: Text(
+//     "Edit",
+//     style: TextStyle(
+//         color: Colors.grey,
+//         fontWeight: FontWeight.bold,
+//         fontSize: 20),
+//   ),
+// ),
+
+//
+// void performLogin(String phoneNumber, String password) {
+//   // Add your login logic here
+//   print('Performing login...');
+//   print('Phone Number: $phoneNumber');
+//   print('Password: $password');
+// }

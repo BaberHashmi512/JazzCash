@@ -13,19 +13,34 @@ class BottomNavigation extends StatefulWidget {
 }
 
 class _BottomNavigationState extends State<BottomNavigation> {
+  late PageController _pageController;
   int currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: currentIndex);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   void onTap(int index) {
     setState(() {
       currentIndex = index;
+      _pageController.jumpToPage(index);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: currentIndex,
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: onTap,
         children: const [
           FirstScreen(),
           Locator(),
