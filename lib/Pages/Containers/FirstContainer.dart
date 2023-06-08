@@ -146,10 +146,10 @@ class _FirstContainerState extends State<FirstContainer> {
                             MaterialPageRoute(builder: (ctx) => const Login()));
                       },
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        // mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
-
                             children: [
                               TextButton(
                                   onPressed: () {},
@@ -169,7 +169,7 @@ class _FirstContainerState extends State<FirstContainer> {
                           const Padding(
                             padding: EdgeInsets.only(right: 10),
                             child: Text(
-                              "   to Transfer Money",
+                              " to Transfer Money",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,

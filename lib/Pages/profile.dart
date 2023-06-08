@@ -155,6 +155,7 @@ class _ProfileState extends State<Profile> {
                                                 ),
                                                 TextButton(
                                                     onPressed: () {
+                                                      MySharedPrefClass.preferences!.remove('token');
                                                       Navigator
                                                           .pushAndRemoveUntil(
                                                           context,

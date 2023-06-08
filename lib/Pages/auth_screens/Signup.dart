@@ -75,8 +75,8 @@ class _SignupPageState extends State<SignupPage> {
   bool isVisible = false;
   String? _gender = "male";
   final _formKey = GlobalKey<FormState>();
-  final _phoneRegex = RegExp(r'^03[0-9]{9}$');
-  final _cnicRegex = RegExp(r'^[0-9]{13}$');
+  final _phoneRegex = RegExp(r'^03\d{9}$');
+  final _cnicRegex = RegExp(r'^\d{13}$');
   final TextEditingController dateinput = TextEditingController();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
@@ -85,34 +85,19 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController _cnicController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  // var phoneNumber="";
-  // var password = "";
-  // var firstName = "";
-  // var lastname = "";
-  // var Email = "";
-  // var dateofBirth="";
-  // var cnicnumber = "";
-  // var Gender ="";
-  // // var image ="";
-
   @override
   void initState() {
     dateinput.text = "";
     super.initState();
   }
-  // print(response);
-  // print(response.stream.toString());
-  // print(response.statusCode);
 
-  Future<void> uploadImage(phoneNumber, password, firstName, lastName, email,
+  Future<void> uploadImage(
+      phoneNumber, password, firstName, lastName, email,
       dateOfBirth, cnicNumber, gender, image) async {
     setState(() {
       showSpinner = true;
     });
-    // var stream = http.ByteStream(image.openRead());
-    // stream.cast();
 
-    var length = await image.length();
     var uri = Uri.parse(Apis.signUpApi);
     var request = http.MultipartRequest('POST', uri);
     request.fields['phone_number'] = phoneNumber;
@@ -125,8 +110,8 @@ class _SignupPageState extends State<SignupPage> {
     request.fields['cnic'] = cnicNumber;
     request.fields['role'] = "user";
 
-    request.files.add(await http.MultipartFile.fromPath(
-        'image', image));
+    request.files.add(await http.MultipartFile.fromPath('image', image.path));
+
     var response = await request.send();
     var responsed = await http.Response.fromStream(response);
 
@@ -142,6 +127,9 @@ class _SignupPageState extends State<SignupPage> {
             backgroundColor: Colors.green,
             textColor: Colors.white,
             fontSize: 18);
+        setState(() {
+          showSpinner = false;
+        });
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context)=>Login()),
                 (route) => false);
@@ -153,6 +141,9 @@ class _SignupPageState extends State<SignupPage> {
             backgroundColor: Colors.redAccent,
             textColor: Colors.white,
             fontSize: 18);
+        setState(() {
+          showSpinner=false;
+        });
       }
     }catch(e){
       print(e.toString());
@@ -161,6 +152,9 @@ class _SignupPageState extends State<SignupPage> {
           backgroundColor: Colors.redAccent,
           textColor: Colors.white,
           fontSize: 18);
+      setState(() {
+        showSpinner =false;
+      });
     }
   }
 
@@ -355,15 +349,15 @@ class _SignupPageState extends State<SignupPage> {
                   const SizedBox(height: 20),
                   GestureDetector(
                     child: TextField(
-                      style: const TextStyle(color: Colors.green),
+                      style: const TextStyle(color: Colors.black),
                       controller: dateinput,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(50),
                           ),
-                          labelStyle: const TextStyle(color: Colors.green),
+                          labelStyle: const TextStyle(color: Colors.black),
                           prefixIcon: const Icon(Icons.calendar_today,
-                              color: Colors.green),
+                              color: Colors.black38),
                           labelText: "Enter Date of Birth"),
                       readOnly: true,
                       onTap: () async {
@@ -479,3 +473,5 @@ class _SignupPageState extends State<SignupPage> {
     );
   }
 }
+
+

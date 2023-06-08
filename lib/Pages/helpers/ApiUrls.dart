@@ -5,4 +5,6 @@ class Apis {
   static const signUpApi = '$baseUrl${apiUrl}register/';
   static const loginApi = '$baseUrl${apiUrl}login/';
   static const profileApi= '$baseUrl${apiUrl}profile/';
+  static const updateProfileApi= '$baseUrl${apiUrl}update-user-profile/';
+  static const changePasswordApi= '$baseUrl${apiUrl}change-password/';
 }
