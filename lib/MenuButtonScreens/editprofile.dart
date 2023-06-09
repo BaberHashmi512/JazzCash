@@ -3,11 +3,10 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:http/http.dart'as http;
+import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:jazzcash/Pages/BottomNavigation.dart';
-import 'package:jazzcash/Pages/FirstScreen.dart';
 
 import '../Pages/helpers/ApiUrls.dart';
 import '../Pages/helpers/MySharedPrefClass.dart';
@@ -27,7 +26,7 @@ class _EditProfileState extends State<EditProfile> {
   TextEditingController _lnamecontroller = TextEditingController();
   TextEditingController dateinput = TextEditingController();
 
-   File? _profileImage;
+  File? _profileImage;
 
   String _gender = "";
   String imgPath = "";
@@ -211,10 +210,13 @@ class _EditProfileState extends State<EditProfile> {
                     onPressed: () {
                       try {
                         updateProfile(
-                            token, _fnamecontroller.text, _lnamecontroller.text,
-                            dateinput.text, _gender, _profileImage);
-                      }
-                      catch(e) {
+                            token,
+                            _fnamecontroller.text,
+                            _lnamecontroller.text,
+                            dateinput.text,
+                            _gender,
+                            _profileImage);
+                      } catch (e) {
                         print(e.toString());
                       }
                     },
@@ -276,7 +278,8 @@ class _EditProfileState extends State<EditProfile> {
         return;
       }
 
-      http.Response response = await http.get(Uri.parse(Apis.profileApi), headers: {
+      http.Response response =
+          await http.get(Uri.parse(Apis.profileApi), headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Authorization': 'Token $mToken',
@@ -299,13 +302,14 @@ class _EditProfileState extends State<EditProfile> {
     }
   }
 
-  void updateProfile(mToken, firstName, lastName, dateOfBirth, gender, image) async {
+  void updateProfile(
+      mToken, firstName, lastName, dateOfBirth, gender, image) async {
     try {
-
       var uri = Uri.parse(Apis.updateProfileApi);
       var request = http.MultipartRequest('put', uri);
 
-      request.headers['Authorization'] = 'Token $mToken'; // Add token to headers
+      request.headers['Authorization'] =
+          'Token $mToken'; // Add token to headers
 
       request.fields['fname'] = firstName;
       request.fields['lname'] = lastName;
@@ -314,7 +318,8 @@ class _EditProfileState extends State<EditProfile> {
 
       if (_profileImage != null) {
         // Image is selected from the gallery
-        request.files.add(await http.MultipartFile.fromPath('image', image.path));
+        request.files
+            .add(await http.MultipartFile.fromPath('image', image.path));
       }
 
       var response = await request.send();
@@ -331,7 +336,7 @@ class _EditProfileState extends State<EditProfile> {
             backgroundColor: Colors.green,
             textColor: Colors.white,
             fontSize: 18);
-
+        // ignore: use_build_context_synchronously
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => const BottomNavigation()),

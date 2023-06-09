@@ -36,6 +36,7 @@ class _FirstContainerState extends State<FirstContainer> {
   String firstname = "Baber Ali ";
   String lastname = "Hashmi";
   int money = 0;
+  String qrPath="";
 
   @override
   Widget build(BuildContext context) {
@@ -45,12 +46,10 @@ class _FirstContainerState extends State<FirstContainer> {
     final wholeNumber = parts[0];
     final decimalPart = parts[1];
     return Container(
-
       decoration: const BoxDecoration(
         color: Colors.black87,
         borderRadius: BorderRadius.only(bottomLeft: Radius.circular(25)),
       ),
-
       child: Column(
         children: [
           Row(
@@ -104,121 +103,141 @@ class _FirstContainerState extends State<FirstContainer> {
                 ],
               ),
               const Padding(padding: EdgeInsets.only(left: 170)),
-              Container(
-                  decoration: BoxDecoration(
-                      color: Colors.black38,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: const Icon(Icons.qr_code_scanner_rounded,
-                      color: Colors.white)),
+              GestureDetector(
+                onTap: () async {
+                  await showDialog(
+                      context: context, builder: (_) => ImageDialog(qrPath: qrPath,));
+                  print(Apis.baseUrl + qrPath);
+                },
+                child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.black38,
+                        borderRadius: BorderRadius.circular(10)),
+                    child: const Icon(Icons.qr_code_scanner_rounded,
+                        color: Colors.white)),
+              ),
             ],
           ),
           const SizedBox(
             height: 10,
           ),
-          token != null ? Container(
-            child:Row(
-              children: [
-                const Text(
-                  "  Rs. ",
-                  style: TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
-                Text(
-                  money.toString(),
-                  style: const TextStyle(
-                      fontSize: 45,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
-              ],
-            ),
-          ):
-          Container(
-            child: Row(
-              children: [
-                Row(
+          token != null
+              ? Container(
+                  child: Row(
                     children: [
-                  GestureDetector(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (ctx) => const Login()));
-                      },
-                      child: Column(
-                        // mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
+                      const Text(
+                        "  Rs. ",
+                        style: TextStyle(
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                      Text(
+                        money.toString(),
+                        style: const TextStyle(
+                            fontSize: 45,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                    ],
+                  ),
+                )
+              : Container(
+                  child: Row(
+                    children: [
+                      Row(children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (ctx) => const Login()));
+                          },
+                          child: Column(
+                            // mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              TextButton(
-                                  onPressed: () {},
-                                  child: const Text(
-                                    "Login",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.yellow,
-                                        fontSize: 28),
-                                  )),
-                              const Icon(
-                                Icons.arrow_forward_rounded,
-                                color: Colors.yellow,
+                              Row(
+                                children: [
+                                  TextButton(
+                                      onPressed: () {},
+                                      child: const Text(
+                                        "Login",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.yellow,
+                                            fontSize: 28),
+                                      )),
+                                  const Icon(
+                                    Icons.arrow_forward_rounded,
+                                    color: Colors.yellow,
+                                  ),
+                                ],
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.only(right: 10),
+                                child: Text(
+                                  " to Transfer Money",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 24),
+                                ),
                               ),
                             ],
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text(
-                              " to Transfer Money",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 24),
-                            ),
-                          ),
-                        ],
-                      ),
-                      ),
-                ]),
-              ],
-            ),
-          ),
+                        ),
+                      ]),
+                    ],
+                  ),
+                ),
           const SizedBox(
             height: 20,
           ),
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 5),
-                  child: ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.red,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20))),
-                      onPressed: () {},
-                      icon: const Icon(Icons.add),
-                      label: const Text("Add Money")),
+          SingleChildScrollView(
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 5),
+                    child: SizedBox(
+                      width: 150,
+                      height: 40,
+                      child: ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20))),
+                          onPressed: () {},
+                          icon: const Icon(Icons.add),
+                          label: const Text("Add Money")),
+                    ),
+                  ),
                 ),
-              ),
-              Spacer(),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 35),
-                child: ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20))),
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context)=>const Profile())
-                      );
-                    },
-                    icon: const Icon(Icons.add_card),
-                    label: const Text("My Account")),
-              )
-            ],
+                // Spacer(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: SizedBox(
+                    width: 150,
+                    height: 40,
+                    child: ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.grey,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20))),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Profile()));
+                        },
+                        icon: const Icon(Icons.add_card),
+                        label: const Text("My Account")),
+                  ),
+                )
+              ],
+            ),
           ),
         ],
       ),
@@ -233,13 +252,11 @@ class _FirstContainerState extends State<FirstContainer> {
         return;
       }
 
-      Response response = await get(
-          Uri.parse(Apis.profileApi),
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': 'Token $mToken',
-          });
+      Response response = await get(Uri.parse(Apis.profileApi), headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Token $mToken',
+      });
 
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body.toString());
@@ -251,6 +268,8 @@ class _FirstContainerState extends State<FirstContainer> {
           firstname = data['fname'];
           lastname = data['lname'];
           money = data['wallet'];
+          qrPath = data['qrcode'];
+
           print("money : $money, wallet: $data['wallet]");
         });
       } else {
@@ -259,5 +278,30 @@ class _FirstContainerState extends State<FirstContainer> {
     } catch (e) {
       print("error: $e");
     }
+  }
+}
+class ImageDialog extends StatelessWidget {
+  var qrPath;
+
+  ImageDialog({super.key,required this.qrPath});
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 20,top: 20),
+        child: Container(
+          width: 300,
+          height: 300,
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+              image: DecorationImage(
+                alignment: Alignment.center,
+                  image: NetworkImage(Apis.baseUrl + qrPath),
+              )
+          ),
+        ),
+      ),
+    );
   }
 }

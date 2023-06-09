@@ -75,9 +75,9 @@ class _FirstScreenState extends State<FirstScreen>
                           ),
                           child: Container(
                             color: const Color(0xfff3f3f3),
-                            child: Column(
+                            child: const Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
+                              children: [
                                 Divider(
                                   height: 0.1,
                                   color: Colors.white,

@@ -40,7 +40,8 @@ class _SearchScreenState extends State<SearchScreen> {
                       color: Colors.white.withOpacity(0.5),
                       spreadRadius: 2,
                       blurRadius: 5,
-                      offset: const Offset(0, 3), // Adjust the offset values as needed
+                      offset: const Offset(
+                          0, 3), // Adjust the offset values as needed
                     ),
                   ],
                   borderRadius: BorderRadius.circular(50),
@@ -54,15 +55,16 @@ class _SearchScreenState extends State<SearchScreen> {
                         color: Colors.grey, // Specify the border color here
                       ),
                     ),
-                    contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                    prefixIcon: Icon(Icons.search),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 20),
+                    prefixIcon: const Icon(Icons.search),
                     hintText: 'Search',
-                    hintStyle: TextStyle(color: Colors.grey),
+                    hintStyle: const TextStyle(color: Colors.grey),
                     filled: true,
-                    fillColor: Colors.white.withOpacity(0.5), // Specify the background color here
+                    fillColor: Colors.white
+                        .withOpacity(0.5), // Specify the background color here
                   ),
                 ),
-
               ),
             ),
           ),
@@ -79,9 +81,7 @@ class _SearchScreenState extends State<SearchScreen> {
           const Text(
             "      Trending Searches",
             style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.grey,
-                fontSize: 18),
+                fontWeight: FontWeight.bold, color: Colors.grey, fontSize: 18),
           ),
           const SizedBox(
             height: 10,
@@ -165,4 +165,3 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 }
-

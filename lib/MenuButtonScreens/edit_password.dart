@@ -1,11 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
-
 import '../Pages/BottomNavigation.dart';
-import '../Pages/FirstScreen.dart';
 import '../Pages/helpers/ApiUrls.dart';
 import '../Pages/helpers/MySharedPrefClass.dart';
 
@@ -32,15 +29,15 @@ class _EditPasswordState extends State<EditPassword> {
         elevation: 0,
         backgroundColor: Colors.black,
         centerTitle: true,
-        title: Text("Edit Password"),
+        title: const Text("Edit Password"),
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
               Padding(
@@ -50,7 +47,7 @@ class _EditPasswordState extends State<EditPassword> {
                   width: 280,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
               TextField(
@@ -73,14 +70,14 @@ class _EditPasswordState extends State<EditPassword> {
                             color: Colors.grey,
                           ),
                   ),
-                  prefixIcon: Icon(Icons.password_sharp),
+                  prefixIcon: const Icon(Icons.password_sharp),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(50),
                   ),
                   labelText: 'Old Password',
                 ),
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               TextField(
                 controller: _newPasswordController,
                 obscureText: !isHide,
@@ -108,7 +105,7 @@ class _EditPasswordState extends State<EditPassword> {
                   labelText: 'New Password',
                 ),
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               TextField(
                 controller: _confirmNewPasswordController,
                 obscureText: !isDisappear,
@@ -185,7 +182,7 @@ class _EditPasswordState extends State<EditPassword> {
             backgroundColor: Colors.green,
             textColor: Colors.white,
             fontSize: 18);
-
+        // ignore: use_build_context_synchronously
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => const BottomNavigation()),

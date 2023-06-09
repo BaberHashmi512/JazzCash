@@ -20,10 +20,7 @@ class _SecondContainerState extends State<SecondContainer> {
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
                   "My JazzCash",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20
-                  ),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
               ),
               const SizedBox(
@@ -39,7 +36,9 @@ class _SecondContainerState extends State<SecondContainer> {
                   label: const Text("Edit"))
             ],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             children: [
               Padding(
@@ -93,8 +92,8 @@ class _SecondContainerState extends State<SecondContainer> {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 35),
-                child:
-                    buildIconButton("assets/images/person.svg", "Debit Card", () {
+                child: buildIconButton("assets/images/person.svg", "Debit Card",
+                    () {
                   debugPrint("shit is about to get real");
                 }),
               ),

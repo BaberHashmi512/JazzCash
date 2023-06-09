@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -11,7 +12,6 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import '../helpers/ApiUrls.dart';
 import '../helpers/MySharedPrefClass.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -91,8 +91,7 @@ class _SignupPageState extends State<SignupPage> {
     super.initState();
   }
 
-  Future<void> uploadImage(
-      phoneNumber, password, firstName, lastName, email,
+  Future<void> uploadImage(phoneNumber, password, firstName, lastName, email,
       dateOfBirth, cnicNumber, gender, image) async {
     setState(() {
       showSpinner = true;
@@ -115,8 +114,8 @@ class _SignupPageState extends State<SignupPage> {
     var response = await request.send();
     var responsed = await http.Response.fromStream(response);
 
-    try{
-      if(responsed.statusCode == 200){
+    try {
+      if (responsed.statusCode == 200) {
         final responsedData = json.decode(responsed.body);
         MySharedPrefClass.preferences
             ?.setString("Username", responsedData["data"]["detail"]);
@@ -130,11 +129,7 @@ class _SignupPageState extends State<SignupPage> {
         setState(() {
           showSpinner = false;
         });
-        Navigator.pushAndRemoveUntil(context,
-            MaterialPageRoute(builder: (context)=>Login()),
-                (route) => false);
-        // Navigator.pushNamed(context, Login().routeName);
-      }else{
+      } else {
         print("Failed");
         Fluttertoast.showToast(
             msg: responsed.body,
@@ -142,10 +137,10 @@ class _SignupPageState extends State<SignupPage> {
             textColor: Colors.white,
             fontSize: 18);
         setState(() {
-          showSpinner=false;
+          showSpinner = false;
         });
       }
-    }catch(e){
+    } catch (e) {
       print(e.toString());
       Fluttertoast.showToast(
           msg: e.toString(),
@@ -153,9 +148,12 @@ class _SignupPageState extends State<SignupPage> {
           textColor: Colors.white,
           fontSize: 18);
       setState(() {
-        showSpinner =false;
+        showSpinner = false;
       });
     }
+    // ignore: use_build_context_synchronously
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (context) => const Login()), (route) => false);
   }
 
   @override
@@ -473,5 +471,3 @@ class _SignupPageState extends State<SignupPage> {
     );
   }
 }
-
-

@@ -45,152 +45,152 @@ class _ProfileState extends State<Profile> {
                 shape: Border.all(width: 0.5),
                 offset: const Offset(0, kToolbarHeight),
                 icon: const Icon(Icons.more_vert),
-                itemBuilder: (_) =>
-                [
-                  PopupMenuItem(
-                    child: Container(
-                      color: Colors.black,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Row(
+                itemBuilder: (_) => [
+                      PopupMenuItem(
+                        child: Container(
+                          color: Colors.black,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              const Icon(
-                                Icons.edit,
-                                color: Colors.yellow,
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.edit,
+                                    color: Colors.yellow,
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const EditProfile()));
+                                      },
+                                      child: const Text(
+                                        "Edit Profile",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ))
+                                ],
                               ),
                               const SizedBox(
-                                width: 10,
+                                height: 5,
                               ),
-                              TextButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                            const EditProfile()));
-                                  },
-                                  child: const Text(
-                                    "Edit Profile",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                  ))
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.password_outlined,
-                                color: Colors.yellow,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              TextButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                            const EditPassword()));
-                                  },
-                                  child: const Text(
-                                    "Change Password",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                  ))
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          // const Divider(
-                          //   height: 0.2,
-                          //   color: Colors.grey,
-                          // ),
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.logout,
-                                color: Colors.yellow,
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.password_outlined,
+                                    color: Colors.yellow,
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const EditPassword()));
+                                      },
+                                      child: const Text(
+                                        "Change Password",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ))
+                                ],
                               ),
                               const SizedBox(
-                                width: 10,
+                                height: 5,
                               ),
-                              TextButton(
-                                  onPressed: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) =>
-                                            AlertDialog(
-                                              title: const Text("Logout"),
-                                              content: const Text(
-                                                "Are you Sure You want to Logout",
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                    FontWeight.bold,
-                                                    color: Colors.black),
-                                              ),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                  child: const Text(
-                                                    "Cancel",
+                              // const Divider(
+                              //   height: 0.2,
+                              //   color: Colors.grey,
+                              // ),
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.logout,
+                                    color: Colors.yellow,
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  TextButton(
+                                      onPressed: () {
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) =>
+                                                AlertDialog(
+                                                  title: const Text("Logout"),
+                                                  content: const Text(
+                                                    "Are you Sure You want to Logout",
                                                     style: TextStyle(
                                                         fontWeight:
-                                                        FontWeight.bold,
-                                                        color: Colors
-                                                            .greenAccent),
+                                                            FontWeight.bold,
+                                                        color: Colors.black),
                                                   ),
-                                                ),
-                                                TextButton(
-                                                    onPressed: () {
-                                                      MySharedPrefClass.preferences!.remove('token');
-                                                      Navigator
-                                                          .pushAndRemoveUntil(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder:
-                                                                  (context) =>
-                                                              const BottomNavigation()),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: const Text(
+                                                        "Cancel",
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Colors
+                                                                .greenAccent),
+                                                      ),
+                                                    ),
+                                                    TextButton(
+                                                        onPressed: () {
+                                                          MySharedPrefClass
+                                                              .preferences!
+                                                              .remove('token');
+                                                          Navigator.pushAndRemoveUntil(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          const BottomNavigation()),
                                                               (route) => false);
-                                                    },
-                                                    child: const Text(
-                                                      "LogOut",
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                          FontWeight
-                                                              .bold,
-                                                          color:
-                                                          Colors.red),
-                                                    ))
-                                              ],
-                                            ));
-                                  },
-                                  child: const Text(
-                                    "Log out",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ))
+                                                        },
+                                                        child: const Text(
+                                                          "LogOut",
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color:
+                                                                  Colors.red),
+                                                        ))
+                                                  ],
+                                                ));
+                                      },
+                                      child: const Text(
+                                        "Log out",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ))
+                                ],
+                              ),
                             ],
                           ),
-                        ],
-                      ),
-                    ),
-                  )
-                ]),
+                        ),
+                      )
+                    ]),
           )
         ],
         elevation: 0,
@@ -239,11 +239,11 @@ class _ProfileState extends State<Profile> {
                       image: DecorationImage(
                         fit: BoxFit.cover,
                         image: token != null &&
-                            imgPath != null &&
-                            imgPath.isNotEmpty
+                                imgPath != null &&
+                                imgPath.isNotEmpty
                             ? NetworkImage(imgPath)
                             : const AssetImage('assets/images/avatar.png')
-                        as ImageProvider,
+                                as ImageProvider,
                       ),
                     ),
                   ),
@@ -264,12 +264,13 @@ class _ProfileState extends State<Profile> {
                     children: [
                       const Text(
                         "Account: ",
-                        style: TextStyle(color: Colors.white,fontSize: 20),
+                        style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                       Text(
                         number,
                         // "03001234567",
-                        style: const TextStyle(color: Colors.white,fontSize: 20),
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 20),
                       )
                     ],
                   ),
@@ -307,14 +308,15 @@ class _ProfileState extends State<Profile> {
                   children: [
                     const Text(
                       "Email",
-                      style: TextStyle(color: Colors.grey,
+                      style: TextStyle(
+                          color: Colors.grey,
                           // fontWeight:FontWeight.bold,
                           fontSize: 20),
                     ),
                     Text(
                       mail,
                       // "Baberhashmi512@gmail.com",
-                      style: const TextStyle(color: Colors.white,fontSize: 20),
+                      style: const TextStyle(color: Colors.white, fontSize: 20),
                     )
                   ],
                 ),
@@ -348,14 +350,15 @@ class _ProfileState extends State<Profile> {
                   children: [
                     const Text(
                       "ID Card Number",
-                      style: TextStyle(color: Colors.grey,
+                      style: TextStyle(
+                          color: Colors.grey,
                           // fontWeight:FontWeight.bold,
                           fontSize: 20),
                     ),
                     Text(
                       idnumber.toString(),
                       // "3630270470271",
-                      style: const TextStyle(color: Colors.white,fontSize: 20),
+                      style: const TextStyle(color: Colors.white, fontSize: 20),
                     )
                   ],
                 ),
@@ -389,13 +392,14 @@ class _ProfileState extends State<Profile> {
                   children: [
                     Text(
                       "Password",
-                      style: TextStyle(color: Colors.grey,
+                      style: TextStyle(
+                          color: Colors.grey,
                           // fontWeight:FontWeight.bold,
                           fontSize: 20),
                     ),
                     Text(
                       "**********",
-                      style: TextStyle(color: Colors.white,fontSize: 20),
+                      style: TextStyle(color: Colors.white, fontSize: 20),
                     )
                   ],
                 ),
@@ -452,5 +456,3 @@ class _ProfileState extends State<Profile> {
     }
   }
 }
-
-

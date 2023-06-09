@@ -12,6 +12,7 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
   QRViewController? _controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   bool _isFlashOn = false;
+  String _scannedMessage = '';
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +21,9 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         automaticallyImplyLeading: false,
-        title: Column(
+        title: const Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
+          children: [
             Text("Use Camera to Scan JazzCash Business"),
             Text("QR Code and Pay"),
           ],
@@ -44,27 +45,41 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
         ],
       ),
       body: Container(
-
         color: Colors.black,
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.white,
-                  width: 1.0,
-                ),
-              ),
-              child: AspectRatio(
-                aspectRatio: 1.0,
-                child: QRView(
-                  key: qrKey,
-                  onQRViewCreated: _onQRViewCreated,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.white,
+                      width: 1.0,
+                    ),
+                  ),
+                  child: AspectRatio(
+                    aspectRatio: 1.0,
+                    child: QRView(
+                      key: qrKey,
+                      onQRViewCreated: _onQRViewCreated,
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20.0),
+              child: Text(
+                'Message: $_scannedMessage',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18.0,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -73,7 +88,11 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
   void _onQRViewCreated(QRViewController controller) {
     setState(() {
       _controller = controller;
-      controller.scannedDataStream.listen((scanData) {});
+      controller.scannedDataStream.listen((scanData) {
+        setState(() {
+          _scannedMessage = scanData.code!;
+        });
+      });
     });
   }
 
