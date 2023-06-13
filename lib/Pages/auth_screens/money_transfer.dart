@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 
 class MoneyTransfer extends StatefulWidget {
-  const MoneyTransfer({Key? key}) : super(key: key);
+    MoneyTransfer({Key? key,
+     required this.scannedMessage
+   }) : super(key: key);
 
+  String scannedMessage = '';
   @override
-  State<MoneyTransfer> createState() => _MoneyTransferState();
+  State<MoneyTransfer> createState() => _MoneyTransferState(scannedMessage);
 }
 
 class _MoneyTransferState extends State<MoneyTransfer> {
   final TextEditingController _inputController = TextEditingController();
   bool _isButtonEnabled = false;
+
+  _MoneyTransferState(String cnic);
+
+  String get cnic => cnic;
 
   @override
   void dispose() {
@@ -28,12 +35,12 @@ class _MoneyTransferState extends State<MoneyTransfer> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        actions: [
+        actions: const [
           Icon(Icons.home)
         ],
         backgroundColor: Colors.black,
         elevation: 0,
-        title: const Text("Transfer Money"),
+        title: const Text("Money Transfer"),
       ),
       body: Column(
         children: [
@@ -43,8 +50,9 @@ class _MoneyTransferState extends State<MoneyTransfer> {
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: [
-                  const Text(
-                    "Transfer to JazzCash",
+                  Text(
+                    cnic,
+                    // "Transfer to JazzCash",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 24,
@@ -60,9 +68,9 @@ class _MoneyTransferState extends State<MoneyTransfer> {
                   TextField(
                     controller: _inputController,
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
-                      prefix: const Text(
+                      prefix: Text(
                         'RS.',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -71,7 +79,7 @@ class _MoneyTransferState extends State<MoneyTransfer> {
                         ),
                       ),
                       hintText: '0',
-                      hintStyle: const TextStyle(
+                      hintStyle: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 28,
                         color: Colors.black,
@@ -97,7 +105,7 @@ class _MoneyTransferState extends State<MoneyTransfer> {
                     child: Row(
                       children: [
                         Text("Send RS. ${_inputController.text}",
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.yellow
                         ),
                         ),

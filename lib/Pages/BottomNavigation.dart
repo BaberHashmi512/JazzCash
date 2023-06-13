@@ -41,7 +41,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
       body: PageView(
         controller: _pageController,
         onPageChanged: onTap,
-        children: const [
+        children:  [
           FirstScreen(),
           Locator(),
           QRCodeScreen(),

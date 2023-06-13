@@ -3,17 +3,18 @@ import 'package:jazzcash/Pages/auth_screens/money_transfer.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class QRCodeScreen extends StatefulWidget {
-  const QRCodeScreen({Key? key}) : super(key: key);
+   QRCodeScreen({Key? key}) : super(key: key);
 
   @override
   _QRCodeScreenState createState() => _QRCodeScreenState();
+
 }
 
 class _QRCodeScreenState extends State<QRCodeScreen> {
   QRViewController? _controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   bool _isFlashOn = false;
-  String _scannedMessage = '';
+  String scannedMessage = '';
 
   @override
   Widget build(BuildContext context) {
@@ -73,8 +74,8 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20.0),
               child: Text(
-                'Message: $_scannedMessage',
-                style: TextStyle(
+                'Message: $scannedMessage',
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 18.0,
                 ),
@@ -91,15 +92,16 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
       _controller = controller;
       controller.scannedDataStream.listen((scanData) {
         setState(() {
-          _scannedMessage = scanData.code!;
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context)=>const MoneyTransfer())
+          scannedMessage = scanData.code!;
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>  MoneyTransfer(scannedMessage: scannedMessage,)),
           );
         });
       });
     });
   }
-
   @override
   void dispose() {
     _controller?.dispose();

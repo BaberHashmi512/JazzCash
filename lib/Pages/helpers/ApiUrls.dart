@@ -7,4 +7,5 @@ class Apis {
   static const profileApi= '$baseUrl${apiUrl}profile/';
   static const updateProfileApi= '$baseUrl${apiUrl}update-user-profile/';
   static const changePasswordApi= '$baseUrl${apiUrl}change-password/';
+  static const transferMoneyApi= '$baseUrl${apiUrl}transfer/';
 }
