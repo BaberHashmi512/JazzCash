@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jazzcash/Pages/auth_screens/money_transfer.dart';
+import 'package:jazzcash/Pages/payments/money_transfer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Pages/BottomNavigation.dart';
 import 'Pages/helpers/MySharedPrefClass.dart';

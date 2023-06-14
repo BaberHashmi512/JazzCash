@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jazzcash/Pages/auth_screens/money_transfer.dart';
+import 'package:jazzcash/Pages/payments/money_transfer.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class QRCodeScreen extends StatefulWidget {
@@ -96,7 +96,8 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) =>  MoneyTransfer(scannedMessage: scannedMessage,)),
+              builder: (context) => MoneyTransfer(scannedMessage: scannedMessage),
+            ),
           );
         });
       });
